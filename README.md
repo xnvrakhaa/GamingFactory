@@ -2,18 +2,18 @@
 
 A Java project demonstrating two **Creational Design Patterns**:
 
-- 🏭 **Factory Method**
-- 🏗️ **Abstract Factory**
+-  **Factory Method**
+- 🏗 **Abstract Factory**
 
 The project uses a gaming setup domain with **GPUs** and **Monitors** to demonstrate object creation, product families, and separation between client code and concrete implementations.
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 The main goal of this project is to demonstrate how creational design patterns separate **object creation** from **client code**.
 
-### 🏭 Factory Method
+###  Factory Method
 
 Used to create different types of GPUs.
 
