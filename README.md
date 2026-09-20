@@ -1,122 +1,398 @@
-Project Description
+# 🎮 Gaming Factory
 
-This project demonstrates two creational design patterns in Java:
+A Java project demonstrating two **Creational Design Patterns**:
 
-Factory Method
-Abstract Factory
+- 🏭 **Factory Method**
+- 🏗️ **Abstract Factory**
 
-The project is based on a gaming setup with GPUs and monitors.
+The project uses a gaming setup domain with **GPUs** and **Monitors** to demonstrate object creation, product families, and separation between client code and concrete implementations.
 
-The Factory Method is used to create different GPU products.
+---
 
-The Abstract Factory is used to create families of related gaming products, such as a GPU and a monitor.
+## 📌 Project Overview
 
-Factory Method
+The main goal of this project is to demonstrate how creational design patterns separate **object creation** from **client code**.
 
-The Factory Method part contains:
+### 🏭 Factory Method
 
-GPU — Product interface.
-NvidiaGPU — Concrete Product.
-AMDGPU — Concrete Product.
-GPUCreator — Creator that declares the factory method.
-NvidiaGPUCreator — Concrete Creator for NVIDIA GPU.
-AMDGPUCreator — Concrete Creator for AMD GPU.
+Used to create different types of GPUs.
 
-The createGPU() method is the Factory Method.
+### 🏗️ Abstract Factory
 
-It allows different creators to decide which concrete GPU should be created.
+Used to create families of related gaming products:
 
-Abstract Factory
+- GPU
+- Monitor
 
-The Abstract Factory part contains:
+Two product families are implemented:
 
-GPU — Abstract Product for GPUs.
-Monitor — Abstract Product for monitors.
-NvidiaGPU and NvidiaMonitor — NVIDIA product family.
-AMDGPU and AMDMonitor — AMD product family.
-GamingFactory — Abstract Factory.
-NvidiaGamingFactory — Concrete Factory for NVIDIA products.
-AMDGamingFactory — Concrete Factory for AMD products.
-Main — Client.
+- 🟢 NVIDIA
+- 🔴 AMD
 
-Each concrete factory creates a consistent family of related products.
+---
 
-For example, NvidiaGamingFactory creates an NVIDIA GPU and an NVIDIA monitor.
+# 🏭 Factory Method
 
-The client works through the GamingFactory, GPU, and Monitor interfaces instead of directly creating concrete products.
+The **Factory Method** is a creational design pattern that provides a method for creating objects while allowing subclasses to decide which concrete object should be created.
 
-Difference Between the Patterns
+In this project, the Factory Method is used to create different GPU implementations.
 
-Factory Method is used to create one type of product.
+## Components
 
-In this project, it creates different types of GPUs.
+| Component | Class | Role |
+|---|---|---|
+| Product | `GPU` | Common interface for all GPUs |
+| Concrete Product | `NvidiaGPU` | NVIDIA GPU implementation |
+| Concrete Product | `AMDGPU` | AMD GPU implementation |
+| Creator | `GPUCreator` | Declares the Factory Method |
+| Concrete Creator | `NvidiaGPUCreator` | Creates `NvidiaGPU` |
+| Concrete Creator | `AMDGPUCreator` | Creates `AMDGPU` |
 
-Abstract Factory is used to create a family of related products.
+## Structure
 
-In this project, it creates a GPU and a monitor belonging to the same family.
+```text
+                 GPUCreator
+                     │
+              createGPU()
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+ NvidiaGPUCreator        AMDGPUCreator
+          │                     │
+          ↓                     ↓
+     NvidiaGPU               AMDGPU
+```
 
-Clean Code Principles
-1. Meaningful Names
+The `createGPU()` method is the **Factory Method**.
 
-Methods and classes have clear names such as createGPU(), createMonitor(), NvidiaGPU, and AMDGamingFactory.
+Each concrete creator decides which GPU implementation should be created:
 
-These names clearly describe their purpose.
+- `NvidiaGPUCreator` → `NvidiaGPU`
+- `AMDGPUCreator` → `AMDGPU`
 
-2. Small Methods
+The creator works with the common `GPU` interface instead of depending on one specific GPU implementation.
 
-Methods such as createGPU(), createMonitor(), and showInfo() perform one clear task.
+---
 
-This makes the code easier to understand and maintain.
+# 🏗️ Abstract Factory
 
-3. Focused Classes
+The **Abstract Factory** is a creational design pattern used to create families of related objects without specifying their concrete classes in the client code.
 
-Each class has a specific responsibility.
+In this project, each factory creates a complete gaming product family consisting of:
 
-Product classes represent products, creator classes create products, factory classes create product families, and Main acts as the client.
+- GPU
+- Monitor
 
-4. No Magic Numbers
+## Abstract Products
 
-Important numeric values should be represented using meaningful named constants instead of unexplained numbers.
+The project has two abstract product interfaces:
 
-For example, using HIGH_END_RAM is clearer than directly using a number such as 64.
+- `GPU`
+- `Monitor`
 
-5. Separation of Responsibilities
+## NVIDIA Family
+
+```text
+          NvidiaGamingFactory
+                  │
+             ┌────┴────┐
+             ↓         ↓
+        NvidiaGPU  NvidiaMonitor
+```
+
+## AMD Family
+
+```text
+           AMDGamingFactory
+                  │
+             ┌────┴────┐
+             ↓         ↓
+          AMDGPU   AMDMonitor
+```
+
+## Components
+
+| Component | Class | Role |
+|---|---|---|
+| Abstract Product | `GPU` | GPU interface |
+| Abstract Product | `Monitor` | Monitor interface |
+| Concrete Product | `NvidiaGPU` | NVIDIA GPU |
+| Concrete Product | `NvidiaMonitor` | NVIDIA monitor |
+| Concrete Product | `AMDGPU` | AMD GPU |
+| Concrete Product | `AMDMonitor` | AMD monitor |
+| Abstract Factory | `GamingFactory` | Creates a product family |
+| Concrete Factory | `NvidiaGamingFactory` | Creates NVIDIA products |
+| Concrete Factory | `AMDGamingFactory` | Creates AMD products |
+| Client | `Main` | Uses the abstract factory |
+
+---
+
+# 🔄 How Abstract Factory Works
+
+The client works only with abstract interfaces:
+
+```text
+                     GamingFactory
+                    /              \
+                   /                \
+                  ↓                  ↓
+      NvidiaGamingFactory      AMDGamingFactory
+              │                       │
+        ┌─────┴─────┐           ┌─────┴─────┐
+        ↓           ↓           ↓           ↓
+   NvidiaGPU  NvidiaMonitor  AMDGPU    AMDMonitor
+```
+
+For example:
+
+```java
+GamingFactory nvidiaFactory = new NvidiaGamingFactory();
+
+GPU gpu = nvidiaFactory.createGPU();
+Monitor monitor = nvidiaFactory.createMonitor();
+```
 
 The client does not directly create concrete products.
 
-Instead, it uses the abstract factory and product interfaces.
+Instead, object creation is delegated to the concrete factory.
 
-This reduces dependencies between the client and concrete product classes.
+This keeps the client independent from concrete product classes.
 
-Project Structure
+---
 
-The project contains separate classes for:
+# 🔄 Factory Method vs Abstract Factory
 
-GPU products
-Monitor products
-Factory Method creators
+| Factory Method | Abstract Factory |
+|---|---|
+| Creates one type of product | Creates a family of related products |
+| Creates GPUs | Creates GPUs and monitors |
+| Uses `GPUCreator` | Uses `GamingFactory` |
+| Concrete creators decide which GPU to create | Concrete factories create a consistent product family |
+| Example: NVIDIA GPU | Example: NVIDIA GPU + NVIDIA Monitor |
+
+### Main Difference
+
+**Factory Method** focuses on creating **one product**.
+
+**Abstract Factory** focuses on creating **multiple related products that belong to the same family**.
+
+```text
+Factory Method
+      │
+      └── GPU
+```
+
+```text
 Abstract Factory
-Concrete factories
-Client
+      │
+      ├── GPU
+      └── Monitor
+```
 
-This separation makes the project easier to understand and maintain.
+---
 
-How to Run
+# 🧹 Clean Code Principles
 
-Open the project in IntelliJ IDEA.
+The project applies several Clean Code principles.
 
-Open Main.java.
+## 1. Meaningful Names
 
-Run the main() method.
+Classes and methods use names that clearly describe their purpose.
 
-The program creates NVIDIA and AMD gaming setups and displays information about their GPUs and monitors.
+Examples:
 
-Conclusion
+```text
+createGPU()
+createMonitor()
+NvidiaGamingFactory
+AMDGamingFactory
+```
 
-This project demonstrates how Factory Method and Abstract Factory can be used to organize object creation.
+Meaningful names make the code easier to understand.
 
-Factory Method provides a way to create different GPU products.
+---
 
-Abstract Factory provides a way to create consistent families of gaming products.
+## 2. Small Methods
 
-The project also applies Clean Code principles to improve readability and maintainability.
+Methods perform one clear task.
+
+Example:
+
+```java
+public GPU createGPU() {
+    return new NvidiaGPU();
+}
+```
+
+The method only creates and returns a GPU.
+
+Small methods are easier to understand and maintain.
+
+---
+
+## 3. Focused Classes
+
+Each class has a specific responsibility.
+
+| Class Type | Responsibility |
+|---|---|
+| Product classes | Represent products |
+| Creator classes | Create individual products |
+| Factory classes | Create product families |
+| `Main` | Acts as the client |
+
+This keeps the project organized and easier to maintain.
+
+---
+
+## 4. No Magic Numbers or Strings
+
+The code avoids unnecessary unexplained values.
+
+Instead of:
+
+```java
+if (ram > 64) {
+    ...
+}
+```
+
+a meaningful constant can be used:
+
+```java
+private static final int HIGH_END_RAM = 64;
+```
+
+Named values make the code easier to understand and modify.
+
+---
+
+## 5. Separation of Responsibilities
+
+The client does not directly create concrete products.
+
+The `Main` class works through:
+
+- `GamingFactory`
+- `GPU`
+- `Monitor`
+
+Example:
+
+```java
+GamingFactory factory = new NvidiaGamingFactory();
+
+GPU gpu = factory.createGPU();
+Monitor monitor = factory.createMonitor();
+```
+
+This reduces the dependency between the client and concrete product classes.
+
+---
+
+# 📁 Project Structure
+
+```text
+GamingFactory/
+│
+├── src/
+│   ├── GPU.java
+│   ├── NvidiaGPU.java
+│   ├── AMDGPU.java
+│   │
+│   ├── GPUCreator.java
+│   ├── NvidiaGPUCreator.java
+│   ├── AMDGPUCreator.java
+│   │
+│   ├── Monitor.java
+│   ├── NvidiaMonitor.java
+│   ├── AMDMonitor.java
+│   │
+│   ├── GamingFactory.java
+│   ├── NvidiaGamingFactory.java
+│   ├── AMDGamingFactory.java
+│   │
+│   └── Main.java
+│
+└── README.md
+```
+
+---
+
+# ▶️ How to Run
+
+1. Open the project in **IntelliJ IDEA**.
+2. Open `Main.java`.
+3. Run the `main()` method.
+4. The program creates NVIDIA and AMD gaming setups.
+5. The created products are displayed in the console.
+
+---
+
+# 🖥️ Example Output
+
+```text
+=== NVIDIA Gaming Setup ===
+NVIDIA GeForce RTX 4070
+NVIDIA G-SYNC Gaming Monitor
+
+=== AMD Gaming Setup ===
+AMD Radeon RX 7900 XTX
+AMD FreeSync Gaming Monitor
+```
+
+---
+
+# ➕ Extending the Project
+
+The design makes it possible to add another product family.
+
+For example, an Intel family could be added:
+
+```text
+           IntelGamingFactory
+                  │
+             ┌────┴────┐
+             ↓         ↓
+         IntelGPU  IntelMonitor
+```
+
+A new `IntelGamingFactory` would implement the existing `GamingFactory` interface.
+
+The client could then use:
+
+```java
+GamingFactory factory = new IntelGamingFactory();
+```
+
+without changing how the client works with `GPU` and `Monitor`.
+
+---
+
+# 🎯 Conclusion
+
+This project demonstrates two important creational design patterns.
+
+### Factory Method
+
+Separates the creation of individual GPU objects and allows concrete creators to decide which GPU implementation is created.
+
+### Abstract Factory
+
+Creates consistent families of related gaming products, such as:
+
+- NVIDIA GPU + NVIDIA Monitor
+- AMD GPU + AMD Monitor
+
+The project also applies Clean Code principles such as:
+
+- Meaningful names
+- Small methods
+- Focused classes
+- Avoiding magic values
+- Separation of responsibilities
+
+The overall design separates **object creation** from **client code** and makes the project easier to extend and maintain.
+
+---
+
