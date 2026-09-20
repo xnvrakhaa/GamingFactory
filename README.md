@@ -25,8 +25,8 @@ Used to create families of related gaming products:
 
 Two product families are implemented:
 
-- 🟢 NVIDIA
-- 🔴 AMD
+-  NVIDIA
+-  AMD
 
 ---
 
@@ -73,7 +73,7 @@ The creator works with the common `GPU` interface instead of depending on one sp
 
 ---
 
-# 🏗 Abstract Factory
+# Abstract Factory
 
 The **Abstract Factory** is a creational design pattern used to create families of related objects without specifying their concrete classes in the client code.
 
@@ -190,7 +190,7 @@ Abstract Factory
 
 ---
 
-# 🧹 Clean Code Principles
+#  Clean Code Principles
 
 The project applies several Clean Code principles.
 
@@ -248,19 +248,6 @@ This keeps the project organized and easier to maintain.
 
 The code avoids unnecessary unexplained values.
 
-Instead of:
-
-```java
-if (ram > 64) {
-    ...
-}
-```
-
-a meaningful constant can be used:
-
-```java
-private static final int HIGH_END_RAM = 64;
-```
 
 Named values make the code easier to understand and modify.
 
