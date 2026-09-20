@@ -1,9 +1,9 @@
-# 🎮 Gaming Factory
+#  Gaming Factory
 
 A Java project demonstrating two **Creational Design Patterns**:
 
 -  **Factory Method**
-- 🏗 **Abstract Factory**
+-  **Abstract Factory**
 
 The project uses a gaming setup domain with **GPUs** and **Monitors** to demonstrate object creation, product families, and separation between client code and concrete implementations.
 
@@ -16,8 +16,7 @@ The main goal of this project is to demonstrate how creational design patterns s
 ###  Factory Method
 
 Used to create different types of GPUs.
-
-### 🏗️ Abstract Factory
+ Abstract Factory
 
 Used to create families of related gaming products:
 
@@ -31,7 +30,7 @@ Two product families are implemented:
 
 ---
 
-# 🏭 Factory Method
+#  Factory Method
 
 The **Factory Method** is a creational design pattern that provides a method for creating objects while allowing subclasses to decide which concrete object should be created.
 
@@ -74,7 +73,7 @@ The creator works with the common `GPU` interface instead of depending on one sp
 
 ---
 
-# 🏗️ Abstract Factory
+# 🏗 Abstract Factory
 
 The **Abstract Factory** is a creational design pattern used to create families of related objects without specifying their concrete classes in the client code.
 
@@ -127,7 +126,7 @@ The project has two abstract product interfaces:
 
 ---
 
-# 🔄 How Abstract Factory Works
+#  How Abstract Factory Works
 
 The client works only with abstract interfaces:
 
@@ -160,7 +159,7 @@ This keeps the client independent from concrete product classes.
 
 ---
 
-# 🔄 Factory Method vs Abstract Factory
+#  Factory Method vs Abstract Factory
 
 | Factory Method | Abstract Factory |
 |---|---|
@@ -290,7 +289,7 @@ This reduces the dependency between the client and concrete product classes.
 
 ---
 
-# 📁 Project Structure
+#  Project Structure
 
 ```text
 GamingFactory/
@@ -319,7 +318,7 @@ GamingFactory/
 
 ---
 
-# ▶️ How to Run
+#  How to Run
 
 1. Open the project in **IntelliJ IDEA**.
 2. Open `Main.java`.
@@ -329,7 +328,7 @@ GamingFactory/
 
 ---
 
-# 🖥️ Example Output
+#  Example Output
 
 ```text
 === NVIDIA Gaming Setup ===
@@ -343,56 +342,5 @@ AMD FreeSync Gaming Monitor
 
 ---
 
-# ➕ Extending the Project
 
-The design makes it possible to add another product family.
-
-For example, an Intel family could be added:
-
-```text
-           IntelGamingFactory
-                  │
-             ┌────┴────┐
-             ↓         ↓
-         IntelGPU  IntelMonitor
-```
-
-A new `IntelGamingFactory` would implement the existing `GamingFactory` interface.
-
-The client could then use:
-
-```java
-GamingFactory factory = new IntelGamingFactory();
-```
-
-without changing how the client works with `GPU` and `Monitor`.
-
----
-
-# 🎯 Conclusion
-
-This project demonstrates two important creational design patterns.
-
-### Factory Method
-
-Separates the creation of individual GPU objects and allows concrete creators to decide which GPU implementation is created.
-
-### Abstract Factory
-
-Creates consistent families of related gaming products, such as:
-
-- NVIDIA GPU + NVIDIA Monitor
-- AMD GPU + AMD Monitor
-
-The project also applies Clean Code principles such as:
-
-- Meaningful names
-- Small methods
-- Focused classes
-- Avoiding magic values
-- Separation of responsibilities
-
-The overall design separates **object creation** from **client code** and makes the project easier to extend and maintain.
-
----
 
